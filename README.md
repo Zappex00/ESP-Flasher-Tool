@@ -6,7 +6,7 @@ It is a small project to make installing Hydra-ESP easier.
 2. [Esptool](https://docs.espressif.com/projects/esptool/en/latest/esp32/)
 
 # How to install 
-1. Download the **latest release**.
+1. Download the folder **Flasher Hydra**.
 
 # How to use 
 1. Open the folder **Flasher Hydra**.
