@@ -7,7 +7,7 @@
 
 ## Requisitos
 
-[Python 3.14 o superior](python.org)
+[Python 3.14 o superior](https://www.python.org)
 * **Hardware:** Dispositivo ESP32 compatible + Cable USB de datos
 * **Software:** Firmware a instalar (`.bin`) y librería `esptool`
 
