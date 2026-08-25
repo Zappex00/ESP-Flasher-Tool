@@ -22,17 +22,15 @@ python -m pip install esptool
 ## Cómo utilizarlo
 
 1. **Conectar el ESP32**  
-Conecta el ESP32 a la computadora mediante un cable USB de datos.
+Conecta el ESP32 mediante un cable USB de datos.
 
 2. **Ejecutar el Flasher**  
-Ejecuta el script de Python de la herramienta.  
+Ejecuta el programa
 El programa debería detectar los puertos COM disponibles.  
 Selecciona el puerto COM correspondiente al ESP32.  
 
 3. **Seleccionar el firmware**  
-Selecciona la herramienta/firmware que deseas instalar, por ejemplo:  
-Hydra
-WiFi Penetration Tool
+Selecciona la herramienta/firmware que deseas instalar  
 
 4. **Iniciar el flasheo**  
 Presiona el botón:
