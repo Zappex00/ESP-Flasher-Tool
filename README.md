@@ -1,16 +1,13 @@
 
-# ⚡ ESP32 Multi-Firmware Flasher GUI
+# ESP-Flasher-Tool
 
-Herramienta con interfaz gráfica diseñada para flashear fácilmente diversos firmwares en dispositivos ESP32 mediante `esptool`.
-
-> ⚠️ **Aviso de Uso Responsable:** Las herramientas de auditoría y pruebas Wi-Fi deben utilizarse únicamente en dispositivos y redes propias o cuando se tenga autorización explícita para realizar pruebas de seguridad.
+> **Aviso de Uso Responsable:** Las herramientas de auditoría y pruebas Wi-Fi deben utilizarse únicamente en dispositivos y redes propias o cuando se tenga autorización explícita para realizar pruebas de seguridad.
 
 ---
 
-## 📋 Requisitos Previos
+## Requisitos
 
-* **Sistema Operativo:** Windows
-* **Entorno:** Python 3.14 o superior
+[Python 3.14 o superior](python.org)
 * **Hardware:** Dispositivo ESP32 compatible + Cable USB de datos
 * **Software:** Firmware a instalar (`.bin`) y librería `esptool`
 
