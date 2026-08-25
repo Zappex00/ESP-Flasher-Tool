@@ -14,7 +14,7 @@
 
 Abre tu terminal y ejecuta los siguientes comandos:
 
-` ```bash
-python -m ensurepip --upgrade
-python -m pip install --upgrade pip
-python -m pip install esptool `
+` ```bash  
+python -m ensurepip --upgrade  
+python -m pip install --upgrade pip  
+python -m pip install esptool `  
