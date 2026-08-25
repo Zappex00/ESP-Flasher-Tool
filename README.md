@@ -10,7 +10,7 @@
 [Python 3.14 o superior](https://www.python.org)
 [Esptool](https://docs.espressif.com/projects/esptool/en/latest/esp32/)
 
-## 2. Instalación de `esptool`
+## 2. Instalación de Esptool
 
 Abre tu terminal y ejecuta los siguientes comandos:
 
