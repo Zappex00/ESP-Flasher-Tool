@@ -24,19 +24,19 @@ python -m pip install esptool
 
 ## Cómo utilizarlo
 
-1. **Conectar el ESP32**
+1. **Conectar el ESP32**  
    Conecta la placa a la computadora utilizando un cable USB de datos.
 
-2. **Ejecutar el Flasher**
+2. **Ejecutar el Flasher**  
    Haz doble clic en el archivo `Tool_Kit.bat` para abrir la herramienta.
 
-3. **Seleccionar el puerto COM**
+3. **Seleccionar el puerto COM**  
    El programa detectará los puertos disponibles; selecciona el puerto que corresponde a tu ESP32.
 
-4. **Seleccionar el firmware**
+4. **Seleccionar el firmware**  
    Escoge la herramienta o firmware que deseas flashear en el dispositivo.
 
-5. **Iniciar el proceso**
+5. **Iniciar el proceso**  
    Presiona el botón **FLASH** para comenzar con la instalación del firmware.
 
    ---
