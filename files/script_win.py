@@ -29,7 +29,19 @@ FIRMWARES = {
             ("0x10000", "firmware.bin"),
         ],
         "freq": "40m",
+
+    },
+
+    "GhostESP": {
+        "folder": "GhostESP",
+        "files": [
+            ("0x1000", "bootloader.bin"),
+            ("0x8000", "partition.bin"),
+            ("0x10000", "firmware.bin"),
+        ],
+        "freq": "40m",
     }
+
 }
 
 
