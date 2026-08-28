@@ -9,39 +9,74 @@ from tkinter import ttk
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-FIRMWARES = {
-    "Hydra": {
-        "folder": "Hydra",
+
+# Firmwares organizados por grupo (listas separadas por grupo)
+FIRMWARE_GROUPED = {
+    "ESP32": {
+        "Hydra": {
+            "folder": "ESP32/Hydra",
+            "files": [
+                ("0x1000", "bootloader.bin"),
+                ("0x8000", "partition-table.bin"),
+                ("0x10000", "projecthydra-32.bin"),
+                ("0x190000", "storage.bin"),
+            ],
+            "freq": "80m",
+        },
+        "GhostESP": {
+            "folder": "ESP32/GhostESP",
+            "files": [
+                ("0x1000", "bootloader.bin"),
+                ("0x8000", "partition.bin"),
+                ("0x10000", "firmware.bin"),
+            ],
+            "freq": "40m",
+        },
+        "Wifi Penetration Tool": {
+            "folder": "ESP32/Wifi Penetration Tool",
+            "files": [
+                ("0x1000", "bootloader.bin"),
+                ("0x8000", "partition-table.bin"),
+                ("0x10000", "firmware.bin"),
+            ],
+            "freq": "40m",
+        },
+        "ESP32 NAT Router": {
+        "folder": "ESP32/ESP32-nat-router",
         "files": [
             ("0x1000", "bootloader.bin"),
             ("0x8000", "partition-table.bin"),
-            ("0x10000", "projecthydra-32.bin"),
-            ("0x190000", "storage.bin"),
-        ],
-        "freq": "80m",
-    },
-
-    "Wifi Penetration Tool": {
-        "folder": "Wifi Penetration Tool",
-        "files": [
-            ("0x1000", "bootloader.bin"),
-            ("0x8000", "partition-table.bin"),
-            ("0x10000", "firmware.bin"),
-        ],
-        "freq": "40m",
-
-    },
-
-    "GhostESP": {
-        "folder": "GhostESP",
-        "files": [
-            ("0x1000", "bootloader.bin"),
-            ("0x8000", "partition.bin"),
-            ("0x10000", "firmware.bin"),
+            ("0xe000", "ota_data_initial.bin"),
+            ("0x10000", "esp32_nat_router.bin"),
         ],
         "freq": "40m",
     }
+    },
+    "ESP32 c5": {
+        "GhostESP": {
+            "folder": "ESP32-c5/GhostESP-c5",
+            "files": [
+                ("0x1000", "bootloader.bin"),
+                ("0x8000", "partitions.bin"),
+                ("0x10000", "firmware.bin"),
+            ],
+            "freq": "40m",
+        },
 
+        "ESP32 NAT Router": {
+        "folder": "ESP32-c5/ESP32-c5-nat-router",
+        "files": [
+            ("0x1000", "bootloader.bin"),
+            ("0x8000", "partition-table.bin"),
+            ("0xe000", "ota_data_initial.bin"),
+            ("0x10000", "esp32_nat_router.bin"),
+        ],
+        "freq": "40m",    
+
+        }
+
+
+    }
 }
 
 
@@ -73,7 +108,8 @@ def detect_ports():
 
 
 def selected_firmware():
-    return FIRMWARES[combo_firmware.get()]
+    group = combo_group.get() if 'combo_group' in globals() else list(FIRMWARE_GROUPED.keys())[0]
+    return FIRMWARE_GROUPED.get(group, {}).get(combo_firmware.get(), {})
 
 
 def get_files():
@@ -120,6 +156,15 @@ def change_firmware(event=None):
     check_files()
 
 
+def change_group(event=None):
+    group = combo_group.get()
+    values = list(FIRMWARE_GROUPED.get(group, {}).keys())
+    combo_firmware["values"] = values
+    if values:
+        combo_firmware.current(0)
+    change_firmware()
+
+
 def start_flash():
     threading.Thread(target=flash, daemon=True).start()
 
@@ -132,7 +177,7 @@ def flash():
         root.after(0, lambda: status.config(text="Select a COM port", fg="red"))
         return
 
-    firmware = FIRMWARES[firmware_name]
+    firmware = selected_firmware()
 
     files = get_files()
 
@@ -207,111 +252,47 @@ def flash():
         root.after(0, lambda: combo_port.config(state="readonly"))
 
 
-# ============================================================
-# INTERFAZ
-# ============================================================
-
 root = tk.Tk()
 
-root.title(
-    "ESP32 Toolkit"
-)
-
-root.geometry(
-    "680x560"
-)
-
-root.resizable(
-    False,
-    False
-)
-
+root.title("ESP32 Toolkit")
+root.geometry("680x560")
+root.resizable(False, False)
 
 title_label = tk.Label(root, text="⚡ ESP32 TOOLKIT", font=("Arial", 21, "bold"))
 title_label.pack(pady=(18, 4))
 
-
 subtitle_label = tk.Label(root, text="Firmware Flasher", font=("Arial", 10))
 subtitle_label.pack(pady=(0, 15))
 
+tk.Label(root, text="Versiones:").pack()
+combo_group = ttk.Combobox(root, values=list(FIRMWARE_GROUPED.keys()), state="readonly", width=30)
+combo_group.current(0)
+combo_group.pack(pady=6)
+combo_group.bind("<<ComboboxSelected>>", change_group)
 
-# Firmware
-
-tk.Label(
-    root,
-    text="Firmware:"
-).pack()
-
-
-combo_firmware = ttk.Combobox(
-    root,
-    values=list(FIRMWARES.keys()),
-    state="readonly",
-    width=30
-)
-
-combo_firmware.current(0)
-
-combo_firmware.pack(
-    pady=6
-)
-
-combo_firmware.bind(
-    "<<ComboboxSelected>>",
-    change_firmware
-)
-
-
-# COM Port
+tk.Label(root, text="Firmware:").pack()
+combo_firmware = ttk.Combobox(root, values=[], state="readonly", width=30)
+combo_firmware.pack(pady=6)
+combo_firmware.bind("<<ComboboxSelected>>", change_firmware)
 
 tk.Label(root, text="COM Port:").pack(pady=(10, 0))
-
-
-combo_port = ttk.Combobox(
-    root,
-    state="readonly",
-    width=30
-)
-
-combo_port.pack(
-    pady=6
-)
-
-
-# Refresh ports
+combo_port = ttk.Combobox(root, state="readonly", width=30)
+combo_port.pack(pady=6)
 
 tk.Button(root, text="🔄 Refresh ports", command=detect_ports, width=25).pack(pady=5)
-
-
-# Check files
-
-#   tk.Button(root, text="📁 Check files", command=check_files, width=25).pack(pady=5)
-
-
-# Flash
 
 flash_button = tk.Button(root, text="⚡ FLASH", command=start_flash, width=30, height=2, font=("Arial", 12, "bold"))
 flash_button.pack(pady=15)
 
-
-# Status
-
 status = tk.Label(root, text="Ready", fg="blue")
 status.pack(pady=5)
 
-
-# Console
-
 tk.Label(root, text="Terminal Output:").pack()
-
 console = tk.Text(root, width=82, height=15, font=("Consolas", 9))
 console.pack(padx=10, pady=8)
 
-
-# Inicio
-
 detect_ports()
+change_group()
 check_files()
-
 
 root.mainloop()
