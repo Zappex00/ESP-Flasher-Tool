@@ -7,7 +7,7 @@
 
 * [Python 3.14 o superior](https://www.python.org)  
 * [Esptool](https://docs.espressif.com/projects/esptool/en/latest/esp32/)
-* ESP32 Clasico
+* ESP32 Clasico o ESP32 c5
 
 ---
 
